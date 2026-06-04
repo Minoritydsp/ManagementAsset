@@ -1,0 +1,81 @@
+@model ManagementAsset.Models.Asset
+
+@{
+    ViewData["Title"] = "Detail Aset";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Detail Aset</h2>
+    <div class="d-flex gap-2">
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">Kembali</a>
+        }
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-bordered">
+            <tr>
+                <th width="35%">Kode Aset</th>
+                <td>@Model.AssetCode</td>
+            </tr>
+            <tr>
+                <th>Nama Aset</th>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <th>Deskripsi</th>
+                <td>@(Model.Description ?? "-")</td>
+            </tr>
+            <tr>
+                <th>Kategori</th>
+                <td>@Model.Category?.Name</td>
+            </tr>
+            <tr>
+                <th>Lokasi</th>
+                <td>@Model.Location?.Name</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>
+                    @{
+                        var badgeClass = Model.Status switch
+                        {
+                            ManagementAsset.Models.AssetStatus.Tersedia => "bg-success",
+                            ManagementAsset.Models.AssetStatus.Digunakan => "bg-primary",
+                            ManagementAsset.Models.AssetStatus.Perbaikan => "bg-warning text-dark",
+                            ManagementAsset.Models.AssetStatus.Rusak => "bg-danger",
+                            _ => "bg-secondary"
+                        };
+                    }
+                    <span class="badge @badgeClass">@Model.Status</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Harga Beli</th>
+                <td>Rp @Model.PurchasePrice.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>Tanggal Beli</th>
+                <td>@Model.PurchaseDate.ToString("dd MMMM yyyy")</td>
+            </tr>
+            <tr>
+                <th>Dipegang Oleh</th>
+                <td>@(Model.AssignedToUser?.FullName ?? "-")</td>
+            </tr>
+            <tr>
+                <th>Dibuat</th>
+                <td>@Model.CreatedAt.ToString("dd MMMM yyyy HH:mm")</td>
+            </tr>
+            <tr>
+                <th>Terakhir Diupdate</th>
+                <td>@(Model.UpdatedAt?.ToString("dd MMMM yyyy HH:mm") ?? "-")</td>
+            </tr>
+        </table>
+    </div>
+</div>

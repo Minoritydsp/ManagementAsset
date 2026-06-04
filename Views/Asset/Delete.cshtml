@@ -1,0 +1,51 @@
+@model ManagementAsset.Models.Asset
+
+@{
+    ViewData["Title"] = "Hapus Aset";
+}
+
+<h2>Hapus Aset</h2>
+<hr />
+
+<div class="alert alert-danger">
+    <strong>Perhatian!</strong> Anda yakin ingin menghapus aset berikut? Tindakan ini tidak bisa dibatalkan.
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-bordered">
+            <tr>
+                <th width="35%">Kode Aset</th>
+                <td>@Model.AssetCode</td>
+            </tr>
+            <tr>
+                <th>Nama Aset</th>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <th>Kategori</th>
+                <td>@Model.Category?.Name</td>
+            </tr>
+            <tr>
+                <th>Lokasi</th>
+                <td>@Model.Location?.Name</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>@Model.Status</td>
+            </tr>
+            <tr>
+                <th>Harga Beli</th>
+                <td>Rp @Model.PurchasePrice.ToString("N0")</td>
+            </tr>
+        </table>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                <a asp-action="Index" class="btn btn-secondary">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>

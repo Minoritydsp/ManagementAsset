@@ -145,3 +145,4 @@ E:\Vibez Coding\ManagementAsset\ManagementAsset\obj\Debug\net8.0\refint\Manageme
 E:\Vibez Coding\ManagementAsset\ManagementAsset\obj\Debug\net8.0\ManagementAsset.pdb
 E:\Vibez Coding\ManagementAsset\ManagementAsset\obj\Debug\net8.0\ManagementAsset.genruntimeconfig.cache
 E:\Vibez Coding\ManagementAsset\ManagementAsset\obj\Debug\net8.0\ref\ManagementAsset.dll
+E:\Vibez Coding\ManagementAsset\ManagementAsset\obj\Debug\net8.0\ManagementAsset.sourcelink.json
