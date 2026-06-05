@@ -1,0 +1,151 @@
+@model IEnumerable<ManagementAsset.Models.Peminjaman>
+
+@{
+    ViewData["Title"] = User.IsInRole("Admin") ? "Semua Pengajuan Peminjaman" : "Peminjaman Saya";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-0 fw-bold">@ViewData["Title"]</h2>
+        <small class="text-muted">Total: @Model.Count() pengajuan</small>
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="ps-3">Aset</th>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <th>Peminjam</th>
+                        }
+                        <th>Keperluan</th>
+                        <th>Tanggal Ajuan</th>
+                        <th>Status</th>
+                        <th class="text-center pe-3">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-3 fw-semibold">@item.Asset?.Name</td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <td>@item.User?.FullName<br /><small class="text-muted">@item.User?.Email</small></td>
+                            }
+                            <td>@item.Keperluan</td>
+                            <td class="text-muted small">@item.TanggalPinjam.ToString("dd MMM yyyy")</td>
+                            <td>
+                                <span class="badge @GetStatusBadge(item.Status)">@item.Status</span>
+                            </td>
+                            <td class="text-center pe-3">
+                                <div class="d-flex gap-1 justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
+                                        Detail
+                                    </button>
+                                    @if (User.IsInRole("Admin") && item.Status == ManagementAsset.Models.StatusPeminjaman.Menunggu)
+                                    {
+                                        <form method="post" asp-action="Approve" asp-route-id="@item.Id" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-success">Setujui</button>
+                                        </form>
+                                        <form method="post" asp-action="Reject" asp-route-id="@item.Id" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
+                                        </form>
+                                    }
+                                    @if (!User.IsInRole("Admin") && item.Status == ManagementAsset.Models.StatusPeminjaman.Disetujui)
+                                    {
+                                        <form method="post" asp-action="Kembalikan" asp-route-id="@item.Id">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-warning"
+                                                onclick="return confirm('Kembalikan aset ini?')">
+                                                Kembalikan
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">Belum ada pengajuan peminjaman.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="modal-@item.Id" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Detail Peminjaman</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="text-muted mb-2">Informasi Aset</h6>
+                    <table class="table table-sm table-bordered mb-3">
+                        <tr><th width="40%">Kode</th><td>@item.Asset?.AssetCode</td></tr>
+                        <tr><th>Nama</th><td>@item.Asset?.Name</td></tr>
+                    </table>
+
+                    <h6 class="text-muted mb-2">Informasi Peminjaman</h6>
+                    <table class="table table-sm table-bordered mb-0">
+                        <tr><th width="40%">Peminjam</th><td>@item.User?.FullName</td></tr>
+                        <tr><th>Departemen</th><td>@(item.User?.Department ?? "-")</td></tr>
+                        <tr><th>Keperluan</th><td>@item.Keperluan</td></tr>
+                        <tr><th>Status</th><td><span class="badge @GetStatusBadge(item.Status)">@item.Status</span></td></tr>
+                        <tr><th>Tanggal Ajuan</th><td>@item.TanggalPinjam.ToString("dd MMM yyyy HH:mm")</td></tr>
+                        <tr><th>Tanggal Disetujui</th><td>@(item.TanggalDisetujui?.ToString("dd MMM yyyy HH:mm") ?? "-")</td></tr>
+                        <tr><th>Tanggal Kembali</th><td>@(item.TanggalKembali?.ToString("dd MMM yyyy HH:mm") ?? "-")</td></tr>
+                        @if (item.CatatanAdmin != null)
+                        {
+                            <tr><th>Catatan Admin</th><td>@item.CatatanAdmin</td></tr>
+                        }
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@functions {
+    string GetStatusBadge(ManagementAsset.Models.StatusPeminjaman status) => status switch
+    {
+        ManagementAsset.Models.StatusPeminjaman.Menunggu => "bg-warning text-dark",
+        ManagementAsset.Models.StatusPeminjaman.Disetujui => "bg-success",
+        ManagementAsset.Models.StatusPeminjaman.Ditolak => "bg-danger",
+        ManagementAsset.Models.StatusPeminjaman.Dikembalikan => "bg-secondary",
+        _ => "bg-light text-dark"
+    };
+}

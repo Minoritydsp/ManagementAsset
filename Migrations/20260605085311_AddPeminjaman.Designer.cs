@@ -4,6 +4,7 @@ using ManagementAsset.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManagementAsset.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260605085311_AddPeminjaman")]
+    partial class AddPeminjaman
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,128 +155,6 @@ namespace ManagementAsset.Migrations
                     b.HasIndex("LocationId");
 
                     b.ToTable("Assets");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AssetCode = "AST-001",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 1,
-                            Name = "Laptop Dell Inspiron 15",
-                            PurchaseDate = new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 9500000m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AssetCode = "AST-002",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 1,
-                            Name = "Laptop Lenovo ThinkPad",
-                            PurchaseDate = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 12000000m,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AssetCode = "AST-003",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 2,
-                            Name = "Printer Canon G2020",
-                            PurchaseDate = new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 2300000m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AssetCode = "AST-004",
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 1,
-                            Name = "Meja Kerja Kayu",
-                            PurchaseDate = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 1500000m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AssetCode = "AST-005",
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2022, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 1,
-                            Name = "Kursi Ergonomis",
-                            PurchaseDate = new DateTime(2022, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 2800000m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 6,
-                            AssetCode = "AST-006",
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2022, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 2,
-                            Name = "Lemari Arsip",
-                            PurchaseDate = new DateTime(2022, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 1200000m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 7,
-                            AssetCode = "AST-007",
-                            CategoryId = 3,
-                            CreatedAt = new DateTime(2021, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 1,
-                            Name = "Motor Honda Vario",
-                            PurchaseDate = new DateTime(2021, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 21000000m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 8,
-                            AssetCode = "AST-008",
-                            CategoryId = 3,
-                            CreatedAt = new DateTime(2020, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 2,
-                            Name = "Mobil Toyota Avanza",
-                            PurchaseDate = new DateTime(2020, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 185000000m,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 9,
-                            AssetCode = "AST-009",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 1,
-                            Name = "Monitor LG 24 inch",
-                            PurchaseDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 3200000m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 10,
-                            AssetCode = "AST-010",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2022, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LocationId = 2,
-                            Name = "Proyektor Epson",
-                            PurchaseDate = new DateTime(2022, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PurchasePrice = 7500000m,
-                            Status = 0
-                        });
                 });
 
             modelBuilder.Entity("ManagementAsset.Models.Category", b =>
@@ -400,47 +281,6 @@ namespace ManagementAsset.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Peminjamans");
-                });
-
-            modelBuilder.Entity("ManagementAsset.Models.RiwayatAset", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Aksi")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("AssetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Keterangan")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int?>("StatusBaru")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StatusLama")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TanggalAksi")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RiwayatAsets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -624,23 +464,6 @@ namespace ManagementAsset.Migrations
                         .IsRequired();
 
                     b.Navigation("ApprovedByUser");
-
-                    b.Navigation("Asset");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ManagementAsset.Models.RiwayatAset", b =>
-                {
-                    b.HasOne("ManagementAsset.Models.Asset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ManagementAsset.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
                     b.Navigation("Asset");
 
